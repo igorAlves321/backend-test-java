@@ -55,4 +55,4 @@ Criar um cadastro de veículos com os seguintes campos:
 Crie um fork do teste para acompanharmos o seu desenvolvimento através dos seus commits.
 
 ## Obrigado!
-Agradecemos sua participação no teste. Boa sorte! 😄
+Agradecemos sua participação no teste. Boa sorte! 😄.
