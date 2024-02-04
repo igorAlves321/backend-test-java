@@ -1,5 +1,6 @@
 package desafioestacionamento.controllers;
 
+import java.util.Map;
 import desafioestacionamento.models.Veiculo;
 import desafioestacionamento.services.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,23 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<Veiculo> createVeiculo(@Valid @RequestBody Veiculo veiculo) {
+    public ResponseEntity<?> createVeiculo(@Valid @RequestBody Veiculo veiculo) {
         Veiculo savedVeiculo = veiculoService.save(veiculo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedVeiculo);
+        // Ajuste para incluir uma mensagem de sucesso
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "message", "Veículo cadastrado com sucesso",
+                "veiculo", savedVeiculo
+        ));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateVeiculo(@PathVariable Long id, @Valid @RequestBody Veiculo veiculoDetails) {
         Veiculo updatedVeiculo = veiculoService.update(id, veiculoDetails)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado"));
-        return ResponseEntity.ok("Veículo com placa '" + updatedVeiculo.getPlaca() + "' atualizado com sucesso!");
+        return ResponseEntity.ok().body(Map.of(
+                "message", "Veículo com placa '" + updatedVeiculo.getPlaca() + "' atualizado com sucesso!",
+                "veiculo", updatedVeiculo
+        ));
     }
 
     @DeleteMapping("/{id}")
@@ -48,6 +56,6 @@ public class VeiculoController {
         if (!veiculoService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado para exclusão");
         }
-        return ResponseEntity.ok("Veículo excluído com sucesso!");
+        return ResponseEntity.ok().body(Map.of("message", "Veículo excluído com sucesso!"));
     }
 }

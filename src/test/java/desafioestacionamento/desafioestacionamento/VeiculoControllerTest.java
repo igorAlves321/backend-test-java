@@ -12,9 +12,10 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Map;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,7 +39,6 @@ public class VeiculoControllerTest {
                 .andExpect(status().isCreated())
                 .andReturn();
 
-        // Extrair o ID do estabelecimento da resposta
         String response = result.getResponse().getContentAsString();
         Map<String, Object> responseMap = objectMapper.readValue(response, Map.class);
         estabelecimentoId = Long.valueOf(responseMap.get("id").toString());
@@ -46,15 +46,13 @@ public class VeiculoControllerTest {
 
     @Test
     public void deveCriarVeiculo() throws Exception {
-        String novoVeiculoJson = String.format("{\"marca\": \"Marca\", \"modelo\": \"Modelo\", \"cor\": \"Cor\", \"placa\": \"PLC123\", \"tipo\": \"CARRO\", \"estabelecimento_id\": %d}", estabelecimentoId);
+        String novoVeiculoJson = String.format("{\"marca\": \"Marca\", \"modelo\": \"Modelo\", \"cor\": \"Cor\", \"placa\": \"ABC1D23\", \"tipo\": \"CARRO\", \"estabelecimento\": {\"id\": %d}}", estabelecimentoId);
 
         mockMvc.perform(post("/veiculos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(novoVeiculoJson))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("cadastrado com sucesso")));
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.message", is("Veículo cadastrado com sucesso")))
+                .andExpect(jsonPath("$.veiculo.marca", is("Marca")));
     }
-
-    // Aqui você pode incluir outros testes para os endpoints de veículos
-    // seguindo a mesma lógica de criação, atualização, exclusão, etc.
 }
