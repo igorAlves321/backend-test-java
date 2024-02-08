@@ -35,7 +35,7 @@ public class Veiculo {
     @JoinColumn(name = "estabelecimento_id")
     private Estabelecimento estabelecimento;
 
-    // Construtores, getters e setters
+
 
     public Veiculo() {
     }

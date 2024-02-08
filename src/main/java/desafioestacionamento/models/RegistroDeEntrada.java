@@ -38,7 +38,7 @@ private Long duracaoEstadiaMinutos;
     public RegistroDeEntrada(Veiculo veiculo, Estabelecimento estabelecimento) {
         this.veiculo = veiculo;
         this.estabelecimento = estabelecimento;
-        this.dataHoraEntrada = LocalDateTime.now(); // Captura o momento atual
+        this.dataHoraEntrada = LocalDateTime.now();
     }
 
 
@@ -60,7 +60,7 @@ private Long duracaoEstadiaMinutos;
         if (dataHoraEntrada != null && dataHoraSaida != null) {
             this.duracaoEstadiaMinutos = Duration.between(dataHoraEntrada, dataHoraSaida).toMinutes();
         } else {
-            this.duracaoEstadiaMinutos = null; // Ou trate como achar adequado
+            this.duracaoEstadiaMinutos = null;
         }
     }
 

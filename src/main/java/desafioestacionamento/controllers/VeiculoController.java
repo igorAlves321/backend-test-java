@@ -34,7 +34,6 @@ public class VeiculoController {
     @PostMapping
     public ResponseEntity<?> createVeiculo(@Valid @RequestBody Veiculo veiculo) {
         Veiculo savedVeiculo = veiculoService.save(veiculo);
-        // Ajuste para incluir uma mensagem de sucesso
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "message", "Veículo cadastrado com sucesso",
                 "veiculo", savedVeiculo

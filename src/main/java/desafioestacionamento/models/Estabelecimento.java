@@ -37,7 +37,7 @@ public class Estabelecimento {
     @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL)
     private List<Veiculo> veiculos;
 
-    // Construtores, getters e setters
+
 
     public Estabelecimento() {
     }
@@ -51,7 +51,7 @@ public class Estabelecimento {
         this.qtdVagasCarros = qtdVagasCarros;
     }
 
-    // Getters e setters
+
 
     public Long getId() {
         return id;
